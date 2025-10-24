@@ -1,37 +1,31 @@
-import React from "react";
-// import FormUser from "./FormUser";
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./routes/ProtectedRoute";
-import Navbar from "./komponen/Navbar";
-import Footer from "./komponen/Footer";
+import { useTheme, ThemeProvider } from "./context/ThemeContext";
+import ThemeButton from "./components/ThemeButton";
 
-const App: React.FC = () => (
-  <div className="flex justify-between flex-col w-screen h-screen">
-    {/* <FormUser /> */}
-    <div>
-      <Navbar />
+const AppContent = () => {
+  const { theme } = useTheme();
 
-      <Routes>
-        <Route path="/about" element={<About />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        {/* <Route path="*" element={<NotFound />} /> */}
-      </Routes>
+  const appStyle = {
+    backgroundColor: theme === "light" ? "#FFF" : "#222",
+    color: theme === "light" ? "#222" : "#FFF",
+    minHeight: "100vh",
+    padding: "20px",
+    transition: "all 0.3s ease",
+  };
+
+  return (
+    <div style={appStyle}>
+      <h1>Demo Light/Dark Mode</h1>
+      <ThemeButton />
     </div>
+  );
+};
 
-    <Footer />
-  </div>
-);
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
 export default App;
